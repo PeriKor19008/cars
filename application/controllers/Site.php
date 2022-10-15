@@ -23,6 +23,7 @@ class Site extends CI_Controller {
     {
         parent::__construct();
         $this->load->model("vehicles_model");
+        $this->load->model("services_model");
     }
 
     public function index()
@@ -36,8 +37,9 @@ class Site extends CI_Controller {
         $this->load->view('vehicles/all_vehicles.php',$result);
     }
     public function all_services(){
+        $result['services']=$this->services_model->get_all_services();
 
-        $this->load->view('services/all_services.php');
+        $this->load->view('services/all_services.php',$result);
     }
     public function all_kteo(){
 

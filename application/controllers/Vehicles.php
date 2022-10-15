@@ -25,9 +25,9 @@ class Vehicles extends CI_Controller {
     }
     public function car_details($id)
     {
-        $result=$this->vehicles_model->get_vehicle_dets($id);
-        echo "<pre>";
-        print_r($result);
+        $result['dets']=$this->vehicles_model->get_vehicle_dets($id);
+
+        $this->load->view("vehicles/vehicle_details",$result);
 
 
     }
