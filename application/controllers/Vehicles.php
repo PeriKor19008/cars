@@ -22,14 +22,23 @@ class Vehicles extends CI_Controller {
     {
         parent::__construct();
         $this->load->model("vehicles_model");
+        $this->load->helper("form");
     }
     public function car_details($id)
     {
         $result['dets']=$this->vehicles_model->get_vehicle_dets($id);
 
         $this->load->view("vehicles/vehicle_details",$result);
-
-
+    }
+    public function update_odometer($id){
+        $ID=array("id"=>$id);
+        $this->load->view("vehicles/update_odometer",$ID);
+        echo "odometer". $id;
+    }
+    public function update_odometer_submit($id){
+        $result=$this->input->post();
+        $data=array("id"=>$id,"data"=>$result);
+        $this->vehicles_model->add_km($data);
     }
 
 }
