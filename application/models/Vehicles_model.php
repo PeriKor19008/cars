@@ -15,11 +15,14 @@ class vehicles_model extends CI_Model
     }
 
     function get_vehicle_dets($id){
-        $this->db->select("car.*,km.odometer");
+
+        $this->db->select("car.*,max(km.odometer) as odo");
         $this->db->from("car as car");
         $this->db->join("km as km","car.id=km.car_id");
 
+
         $this->db->where("car.id",$id);
+
         $query=$this->db->get();
         return$query->result();
     }

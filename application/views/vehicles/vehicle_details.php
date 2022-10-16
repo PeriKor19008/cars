@@ -1,7 +1,10 @@
 
 <?php
+echo"<pre>";
 
-foreach ($dets as $det){
+$det=$dets[0];
+$update_odometer_url="http://127.0.0.1:80/index.php/vehicles/update_odometer/".$det->id;
+
     echo "license plate : ".$det->license_plate . "<br>";
     echo "vehicle type : ".$det->vehicle_type . "<br>";
     echo "ownership type : ".$det->ownership_type . "<br>";
@@ -20,10 +23,8 @@ foreach ($dets as $det){
     echo "km before tyre change : ".$det->service_tyre_km . "<br>";
     echo "years before KTEO check : ".$det->KTEO_years . "<br>";
     echo "years before emissions check : ".$det->emission_years . "<br>";
-    echo "kms driven : ".$det->odometer . "<br>";
+    echo "kms driven : ".$det->odo. "  <a href='$update_odometer_url'>update</a><br>";
     echo "comments : ".$det->comments . "<br>";
     echo "active : ".$det->active . "<br>";
 
-    $update_odometer_url="http://127.0.0.1:8000/index.php/vehicles/update_odometer/".$det->id;
-    echo "<a href='$update_odometer_url'>update kms driven</a>";
-}
+    echo "";
