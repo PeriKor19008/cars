@@ -4,7 +4,10 @@
 
 <?php
 $this->load->view("navbar") ;
-
+$add_service_url="http://127.0.0.1/index.php/services/new_service";
+echo "<pre>";
+print_r($services);
+echo "<a class='btn btn-primary btn-xs' href='$add_service_url'>new service</a><br>";
 foreach ($services as $service){
 
     echo $service->license_plate ."<br>";

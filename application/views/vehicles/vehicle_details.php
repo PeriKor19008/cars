@@ -25,7 +25,7 @@ $update_odometer_url="http://127.0.0.1:80/index.php/vehicles/update_odometer/".$
     echo "km before tyre change : ".$det->service_tyre_km . "<br>";
     echo "years before KTEO check : ".$det->KTEO_years . "<br>";
     echo "years before emissions check : ".$det->emission_years . "<br>";
-    echo "kms driven : ".$det->odo. "  <a href='$update_odometer_url'>update</a><br>";
+    echo "kms driven : ".$det->odo. "  <a class='btn btn-primary btn-xs' href='$update_odometer_url'>update</a><br>";
     echo "comments : ".$det->comments . "<br>";
     echo "active : ".$det->active . "<br>";
 

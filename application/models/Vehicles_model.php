@@ -28,6 +28,8 @@ class vehicles_model extends CI_Model
     }
     function add_km($data){
 
+        echo"<pre>";
+
         $date=$data["data"]["update_date"];
         $reading=$data["data"]["odometer_reading"];
         $id=$data["id"];
