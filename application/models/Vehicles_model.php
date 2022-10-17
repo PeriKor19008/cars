@@ -42,6 +42,14 @@ class vehicles_model extends CI_Model
         }
 
     }
+    function get_next_services($id){
+        $this->db->select("max(service_reg_km) as reg_km,max(service_reg_date) reg_date,max(service_oil_km) as oil_km,max(service_oil_date) as oil_date");
+        $this->db->from("services");
+        $this->db->where("car_id",$id);
+        $query=$this->db->get();
+        return$query->result();
+
+    }
 
 
 }

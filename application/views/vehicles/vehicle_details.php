@@ -1,14 +1,12 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <?php
 $this->load->view("navbar") ;
 echo"<pre>";
-
+$s=$serv[0];
+print_r($s);
 $det=$dets[0];
 $update_odometer_url="http://127.0.0.1:80/index.php/vehicles/update_odometer/".$det->id;
-
+    echo "<h3>Vehicle details</h3><br>";
     echo "license plate : ".$det->license_plate . "<br>";
     echo "vehicle type : ".$det->vehicle_type . "<br>";
     echo "ownership type : ".$det->ownership_type . "<br>";
@@ -31,4 +29,7 @@ $update_odometer_url="http://127.0.0.1:80/index.php/vehicles/update_odometer/".$
     echo "comments : ".$det->comments . "<br>";
     echo "active : ".$det->active . "<br>";
 
-    echo "";
+echo "<h3>Vehicle details</h3><br>";
+    echo "next regular service at : ". $s->reg_km ." kms or at date ". $s->reg_date ." what ever comes first <br>";
+    echo "next oil service at : ". $s->oil_km ." kms or at date ". $s->oil_date ." what ever comes first";
+

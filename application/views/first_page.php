@@ -6,5 +6,5 @@
 
 
 
-<?php $this->load->view("hf/footer.html") ?>
+
 

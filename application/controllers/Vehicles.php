@@ -28,6 +28,8 @@ class Vehicles extends CI_Controller {
     {
 
         $result['dets']=$this->vehicles_model->get_vehicle_dets($id);
+        $result['serv']=$this->vehicles_model->get_next_services($id);
+
 
         $this->load->view("vehicles/vehicle_details",$result);
     }
