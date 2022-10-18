@@ -5,7 +5,7 @@ echo"<pre>";
 $s=$serv[0];
 print_r($s);
 $det=$dets[0];
-$update_odometer_url="http://127.0.0.1:80/index.php/vehicles/update_odometer/".$det->id;
+$update_odometer_url=base_url('/index.php/vehicles/update_odometer/'.$det->id);
     echo "<h3>Vehicle details</h3><br>";
     echo "license plate : ".$det->license_plate . "<br>";
     echo "vehicle type : ".$det->vehicle_type . "<br>";

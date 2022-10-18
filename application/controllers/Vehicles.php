@@ -36,7 +36,7 @@ class Vehicles extends CI_Controller {
     public function update_odometer($id){
         $ID=array("id"=>$id);
         $this->load->view("vehicles/update_odometer",$ID);
-        echo "odometer". $id;
+
     }
     public function update_odometer_submit($id){
         $result=$this->input->post();
