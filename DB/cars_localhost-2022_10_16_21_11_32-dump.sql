@@ -56,11 +56,11 @@ DROP TABLE IF EXISTS `car`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `car` (
   `license_plate` varchar(15) DEFAULT NULL,
-  `vehicle_type` varchar(40) NOT NULL,
-  `ownership_type` varchar(40) DEFAULT NULL,
+  `vehicle_type` int NOT NULL,
+  `ownership_type` enum('SuperCargo','I.X.') DEFAULT NULL,
   `id` int NOT NULL AUTO_INCREMENT,
   `owner` varchar(40) NOT NULL,
-  `fuel` varchar(40) NOT NULL,
+  `fuel` enum('gasoline','petrol','electric') NOT NULL,
   `manufacturer` varchar(20) NOT NULL,
   `model` varchar(20) NOT NULL,
   `color` varchar(15) DEFAULT NULL,
@@ -80,8 +80,10 @@ CREATE TABLE `car` (
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `car_car_id_fk` (`escort_id`),
-  CONSTRAINT `car_car_id_fk` FOREIGN KEY (`escort_id`) REFERENCES `car` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `car_vehicle_type_null_fk` (`vehicle_type`),
+  CONSTRAINT `car_car_id_fk` FOREIGN KEY (`escort_id`) REFERENCES `car` (`id`),
+  CONSTRAINT `car_vehicle_type_null_fk` FOREIGN KEY (`vehicle_type`) REFERENCES `vehicle_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,7 +92,7 @@ CREATE TABLE `car` (
 
 LOCK TABLES `car` WRITE;
 /*!40000 ALTER TABLE `car` DISABLE KEYS */;
-INSERT INTO `car` VALUES ('KSA-1234','SUV','I.X.',1,'KORO_PERI','gas','Ford','focus','black',2500,2009,2010,2010,60000,18,50000,12,10000,2,3,NULL,NULL,1),('KRE-4567','van','ix',2,'katsa','petrol','mazda','mx-5','red',1800,2010,2011,2012,2000,12,30000,15,10000,2,3,NULL,NULL,1),('REA-5555','TRACK','ix',3,'kostas','gas','ford','ranger','blue',3000,2005,2005,2005,2222,2,2222,22,22222,2,3,NULL,NULL,1),('LRE-9999','suv','ix',4,'john','petrol','toyote','corola','grey',2000,2002,2002,2002,22222,33,3333,33,33333,2,3,NULL,NULL,1);
+INSERT INTO `car` VALUES ('KSA-1234',1,'SuperCargo',1,'KORO_PERI','gasoline','Ford','focus','black',2500,2009,2010,2010,60000,18,50000,12,10000,2,3,NULL,NULL,1),('KRE-4567',1,'I.X.',2,'katsa','gasoline','mazda','mx-5','red',1800,2010,2011,2012,2000,12,30000,15,10000,2,3,NULL,NULL,1),('REA-5555',1,'SuperCargo',3,'kostas','gasoline','ford','ranger','blue',3000,2005,2005,2005,2222,2,2222,22,22222,2,3,NULL,NULL,1),('LRE-9999',1,'SuperCargo',4,'john','gasoline','toyote','corola','grey',2000,2002,2002,2002,22222,33,3333,33,33333,2,3,NULL,NULL,1);
 /*!40000 ALTER TABLE `car` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -218,8 +220,8 @@ CREATE TABLE `km` (
   `car_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `km_car_id_index` (`car_id`),
-  CONSTRAINT `km_car_null_fk` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `km_car_null_fk` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -228,7 +230,7 @@ CREATE TABLE `km` (
 
 LOCK TABLES `km` WRITE;
 /*!40000 ALTER TABLE `km` DISABLE KEYS */;
-INSERT INTO `km` VALUES ('2020-10-15',1000,2,1),('2022-09-26',222223,3,2),('2022-09-26',24222234,4,3),('2022-09-26',24222234,5,1),('2022-10-16',0,6,4);
+INSERT INTO `km` VALUES ('2020-10-15',1000,2,1),('2022-09-26',222223,3,2),('2022-09-26',24222234,4,3),('2022-09-26',24222234,5,1),('2022-10-16',0,6,4),('2022-10-17',2000,7,1),('2022-10-14',2147483647,8,1),('2022-09-27',4235,12,2);
 /*!40000 ALTER TABLE `km` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -308,11 +310,11 @@ CREATE TABLE `services` (
   `service_oil_km` int NOT NULL,
   `service_oil_date` date NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `services_car_null_fk` (`car_id`),
   KEY `services_service_type_null_fk` (`type`),
-  CONSTRAINT `services_car_null_fk` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`),
+  KEY `services_car_null_fk` (`car_id`),
+  CONSTRAINT `services_car_null_fk` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`) ON DELETE CASCADE,
   CONSTRAINT `services_service_type_null_fk` FOREIGN KEY (`type`) REFERENCES `service_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -321,7 +323,7 @@ CREATE TABLE `services` (
 
 LOCK TABLES `services` WRITE;
 /*!40000 ALTER TABLE `services` DISABLE KEYS */;
-INSERT INTO `services` VALUES (2,1,'2020-10-15',1000,20.2,'mitroulias','injection',2,10000,'2022-10-15',20000,'2020-10-08');
+INSERT INTO `services` VALUES (2,1,'2020-10-15',1000,20.2,'mitroulias','injection',2,10000,'2022-10-15',20000,'2020-10-08'),(3,1,'2022-10-17',2000,20.3,'fd',NULL,1,2000,'2021-10-06',20000,'2021-10-01'),(4,2,'2022-09-27',4235,4235,'sdfg','fsg',3,2345,'2022-10-05',2435,'2022-10-13');
 /*!40000 ALTER TABLE `services` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -393,6 +395,30 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `vehicle_type`
+--
+
+DROP TABLE IF EXISTS `vehicle_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `vehicle_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `type` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vehicle_type`
+--
+
+LOCK TABLES `vehicle_type` WRITE;
+/*!40000 ALTER TABLE `vehicle_type` DISABLE KEYS */;
+INSERT INTO `vehicle_type` VALUES (1,'SUV'),(2,'VAN'),(3,'TRUCK');
+/*!40000 ALTER TABLE `vehicle_type` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -403,4 +429,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-16 21:11:32
+-- Dump completed on 2022-10-21  3:16:40

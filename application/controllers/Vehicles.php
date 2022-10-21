@@ -31,7 +31,9 @@ class Vehicles extends CI_Controller {
         $result['serv']=$this->vehicles_model->get_next_services($id);
 
 
+        $this->load->view('hf/header');
         $this->load->view("vehicles/vehicle_details",$result);
+        $this->load->view('hf/footer.html');
     }
     public function update_odometer($id){
         $ID=array("id"=>$id);
@@ -42,6 +44,33 @@ class Vehicles extends CI_Controller {
         $result=$this->input->post();
         $data=array("id"=>$id,"data"=>$result);
         $this->vehicles_model->add_km($data);
+    }
+
+    public function add_vehicle(){
+        $data['result']=$this->vehicles_model->get_vehicle_types();
+
+        $this->load->view('hf/header');
+        $this->load->view('vehicles/add_vehicle',$data);
+        $this->load->view('hf/footer.html');
+    }
+    public function new_vehicle_submit(){
+        $result=$this->input->post();
+        $this->vehicles_model->add_vehicle($result);
+
+    }
+    public function are_u_sure_delete($id){
+        $data['id']=$id;
+        $this->load->view('hf/header');
+        $this->load->view('vehicles/are_u_sure_delete',$data);
+        $this->load->view('hf/footer.html');
+
+    }
+    public function delete($id){
+        $data['id']=$id;
+        $this->vehicles_model->delete($id);
+        $this->load->view('hf/header');
+        $this->load->view('vehicles/deleted',$data);
+        $this->load->view('hf/footer.html');
     }
 
 }

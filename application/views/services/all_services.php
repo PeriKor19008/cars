@@ -6,8 +6,7 @@
 $this->load->view("navbar") ;
 $add_service_url=base_url('/index.php/services/new_service');
 
-echo "<pre>";
-print_r($services);
+
 echo "<a class='btn btn-primary btn-xs' href='$add_service_url'>new service</a><br>";
 foreach ($services as $service){
 

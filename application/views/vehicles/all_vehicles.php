@@ -1,11 +1,12 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 
 
 <?php
-$this->load->view("navbar") ;
 
+$add_vehicle_url = base_url('index.php/vehicles/add_vehicle');
+
+echo "<a class='btn btn-primary btn-block' href='$add_vehicle_url'>(+) new vehicle</a>";
+echo"<br>";
 echo "  <div class='panel-group'>";
 foreach ($cars as $car){
     echo "<li class='list-group-item'>";

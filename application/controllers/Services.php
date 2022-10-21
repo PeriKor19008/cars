@@ -19,8 +19,6 @@ class Services extends CI_Controller {
     }
     public function new_service_submit(){
         $result=$this->input->post();
-        echo "<pre>";
-
 
         $this->services_model->post_new_service($result);
 

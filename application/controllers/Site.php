@@ -28,13 +28,16 @@ class Site extends CI_Controller {
 
     public function index()
     {
+        $this->load->view('hf/header');
         $this->load->view('first_page.php');
+        $this->load->view('hf/footer.html');
     }
     public function all_vehicles(){
         $result['cars']=$this->vehicles_model->get_all_vehicles();
 
-
+        $this->load->view('hf/header.php');
         $this->load->view('vehicles/all_vehicles.php',$result);
+        $this->load->view('hf/footer.html');
     }
     public function all_services(){
         $result['services']=$this->services_model->get_all_services();

@@ -52,6 +52,18 @@ class vehicles_model extends CI_Model
         return$query->result();
 
     }
+    function get_vehicle_types(){
+        $query=$this->db->get('vehicle_type');
+        return $query->result();
+    }
+
+    function add_vehicle($data){
+        $this->db->insert('car', $data);
+    }
+    function delete($id){
+        $this->db->where('id',$id);
+        $this->db->delete('car');
+    }
 
 
 }
