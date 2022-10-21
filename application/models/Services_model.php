@@ -18,32 +18,46 @@ class services_model extends CI_Model
         return $result=$query->result();
     }
     function post_new_service($data){
-        echo "<pre>";
+
 
         $dt=(object)$data;
 
 
-        /*foreach ($data as [$name,$val]){
-            echo $name;
-        }*/
 
-        $this->db->select("id");
-        $this->db->from("car");
-        $this->db->where("license_plate",$dt->license_plate);
+        return $flag=$this->db->insert("services",$dt);
+
+
+    }
+
+    function get_license_plates(){
+        $this->db->select('id,license_plate');
+        $this->db->from('car');
         $query=$this->db->get();
-        $rs=$query->result();
-        $car_id=$rs[0]->id;
-        unset($dt->license_plate);
-        $dt->car_id=$car_id;
+        return $result=$query->result();
+    }
 
-        $flag=$this->db->insert("services",$dt);
-        if($flag==1){
-            echo "new service has been added";
-        }
-        else {
-            echo "something went wrong";
-        }
+    function get_service_details($id){
 
+
+        $this->db->select('services.*,service_type.name,car.license_plate,car.manufacturer,car.model');
+        $this->db->from('services');
+        $this->db->join('car','services.car_id=car.id');
+        $this->db->join('service_type','services.type=service_type.id');
+        $this->db->where('services.id',$id);
+        $query=$this->db->get();
+        return $result=$query->result();
+
+
+
+        $this->db->where('id',$id);
+        $query=$this->db->get('services');
+        return $query->result();
+    }
+
+
+    function delete($id){
+        $this->db->where('id',$id);
+        $this->db->delete('services');
     }
 
 

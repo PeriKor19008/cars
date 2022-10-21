@@ -1,10 +1,8 @@
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 <?php
-$this->load->view("navbar") ;
+/*echo "<pre>";
+print_r($result[0]->license_plate);*/
+
 $url="services/new_service_submit";
 echo form_open($url,array(
     "method"=>"post",
@@ -14,9 +12,26 @@ echo form_open($url,array(
 ));
 ?>
 <div >
+
+
+
     <div class="form-group">
-        <input type="text" placeholder="license plate (XXX-0000)" name="license_plate"/>
+        <label>license plate
+            <select name="car_id" >
+                <?php
+
+                foreach ($result as $r){
+                    echo"<option value='$r->id'>$r->license_plate</option>";
+
+                }
+                ?>
+            </select>
+        </label>
     </div>
+
+
+
+
 
     <div class="form-group">
         <label>Date of service</label>
